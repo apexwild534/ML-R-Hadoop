@@ -1,1 +1,60 @@
+# Load the necessary libraries
+library(tidyverse)
 
+# Sample dataset tiddlw
+tiddlw <- tibble(
+  x = rnorm(100),
+  y = rnorm(100),
+  category = sample(c("A", "B", "C"), 100, replace = TRUE)
+)
+
+# Scatter plot
+ggplot(tiddlw, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  ggtitle("Scatter Plot")
+
+# Line plot
+ggplot(tiddlw, aes(x = x, y = y)) +
+  geom_line() +
+  theme_minimal() +
+  ggtitle("Line Plot")
+
+# Bar plot
+ggplot(tiddlw, aes(x = category)) +
+  geom_bar() +
+  theme_minimal() +
+  ggtitle("Bar Plot")
+
+# Histogram
+ggplot(tiddlw, aes(x = x)) +
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  theme_minimal() +
+  ggtitle("Histogram")
+
+# Box plot
+ggplot(tiddlw, aes(x = category, y = x)) +
+  geom_boxplot() +
+  theme_minimal() +
+  ggtitle("Box Plot")
+
+# Facet plot
+ggplot(tiddlw, aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~category) +
+  theme_minimal() +
+  ggtitle("Facet Plot")
+
+# Heatmap (Using `geom_tile` for a heatmap-like plot)
+# We will create a mock dataset for heatmap
+heatmap_data <- tibble(
+  x = rep(1:10, each = 10),
+  y = rep(1:10, times = 10),
+  value = rnorm(100)
+)
+
+ggplot(heatmap_data, aes(x = x, y = y, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  theme_minimal() +
+  ggtitle("Heatmap")
