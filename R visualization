@@ -1,60 +1,78 @@
-# Load the necessary libraries
-library(tidyverse)
+# Install and load necessary packages
+install.packages("ggplot2")
+install.packages("dplyr")
+library(ggplot2)
+library(dplyr)
 
-# Sample dataset tiddlw
-df <- tibble(
-  x = rnorm(100),
-  y = rnorm(100),
-  category = sample(c("A", "B", "C"), 100, replace = TRUE)
-)
+# Load the dataset
+data(dataset_name)
 
-# Scatter plot
-ggplot(df, aes(x = x, y = y)) +
+# Print the entire dataset
+print(dataset_name)
+
+# View the first 6 rows of the dataset
+head(dataset_name)
+
+# View the last 6 rows of the dataset
+tail(dataset_name)
+
+# Get a summary of the dataset
+summary(dataset_name)
+
+# Scatter Plot: Variable1 vs. Variable2
+ggplot(dataset_name, aes(x = Variable1, y = Variable2)) +
   geom_point() +
   theme_minimal() +
-  ggtitle("Scatter Plot")
+  ggtitle("Scatter Plot: Variable1 vs. Variable2")
 
-# Line plot
-ggplot(df, aes(x = x, y = y)) +
+# Add an index column to the dataset for plotting
+dataset_name <- dataset_name %>% mutate(index = row_number())
+
+# Line Plot: Index vs. Variable
+ggplot(dataset_name, aes(x = index, y = Variable)) +
   geom_line() +
   theme_minimal() +
-  ggtitle("Line Plot")
+  ggtitle("Line Plot: Index vs. Variable")
 
-# Bar plot
-ggplot(df, aes(x = category)) +
+# Bar Plot: Count of Categories
+ggplot(dataset_name, aes(x = factor(CategoryVariable))) +
   geom_bar() +
   theme_minimal() +
-  ggtitle("Bar Plot")
+  ggtitle("Bar Plot: Count of Categories") +
+  xlab("Category Variable") +
+  ylab("Count")
 
-# Histogram
-ggplot(df, aes(x = x)) +
-  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+# Histogram: Distribution of Variable
+ggplot(dataset_name, aes(x = Variable)) +
+  geom_histogram(binwidth = 2, fill = "skyblue", color = "black") +
   theme_minimal() +
-  ggtitle("Histogram")
+  ggtitle("Histogram: Distribution of Variable")
 
-# Box plot
-ggplot(df, aes(x = category, y = x)) +
+# Box Plot: Variable by Category
+ggplot(dataset_name, aes(x = factor(CategoryVariable), y = Variable)) +
   geom_boxplot() +
   theme_minimal() +
-  ggtitle("Box Plot")
+  ggtitle("Box Plot: Variable by Category") +
+  xlab("Category Variable")
 
-# Facet plot
-ggplot(df, aes(x = x, y = y)) +
+# Facet Plot: Variable1 vs. Variable2 by FacetVariable
+ggplot(dataset_name, aes(x = Variable1, y = Variable2)) +
   geom_point() +
-  facet_wrap(~category) +
+  facet_wrap(~FacetVariable) +
   theme_minimal() +
-  ggtitle("Facet Plot")
+  ggtitle("Facet Plot: Variable1 vs. Variable2 by FacetVariable")
 
-# Heatmap (Using `geom_tile` for a heatmap-like plot)
-# We will create a mock dataset for heatmap
-heatmap_data <- tibble(
-  x = rep(1:10, each = 10),
-  y = rep(1:10, times = 10),
-  value = rnorm(100)
-)
+# Calculate the correlation matrix (excluding any categorical columns)
+cor_matrix <- cor(dataset_name[, -which(names(dataset_name) == "CategoryVariable")])
 
-ggplot(heatmap_data, aes(x = x, y = y, fill = value)) +
+# Convert the correlation matrix into a data frame
+cor_data <- as.data.frame(as.table(cor_matrix))
+names(cor_data) <- c("Variable1", "Variable2", "Correlation")
+
+# Heatmap: Correlation Matrix
+ggplot(cor_data, aes(x = Variable1, y = Variable2, fill = Correlation)) +
   geom_tile() +
-  scale_fill_gradient(low = "white", high = "blue") +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
   theme_minimal() +
-  ggtitle("Heatmap")
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Heatmap: Correlation Matrix")
