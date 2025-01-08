@@ -1,1 +1,35 @@
+-- Load Data
+data = LOAD 'hdfs://path/to/file' USING PigStorage(',') AS (field1:type1, field2:type2, ...);
 
+-- Store Data
+STORE data INTO 'hdfs://path/to/output' USING PigStorage(',');
+
+-- Dump Data (print to console)
+DUMP data;
+
+-- Filter Data
+filtered_data = FILTER data BY field1 > value;
+
+-- Group Data
+grouped_data = GROUP data BY field1;
+
+-- Join Data
+joined_data = JOIN data1 BY field1, data2 BY field2;
+
+-- Order Data
+ordered_data = ORDER data BY field1 DESC;
+
+-- Limit Data (limit the number of records)
+limited_data = LIMIT data 10;
+
+-- Foreach Loop (transform the data)
+result = FOREACH data GENERATE field1, field2;
+
+-- Describe Schema (show schema of data)
+DESCRIBE data;
+
+-- Illustrate Data Flow (show a sample of the data flow)
+ILLUSTRATE data;
+
+-- Explain Logical Plan (explain how Pig processes the script)
+EXPLAIN data;
