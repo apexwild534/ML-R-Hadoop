@@ -1,0 +1,78 @@
+# Install and load necessary packages
+install.packages("ggplot2")
+install.packages("dplyr")
+library(ggplot2)
+library(dplyr)
+
+# Load the iris dataset
+data(iris)
+
+# Print the entire dataset
+print(iris)
+
+# View the first 6 rows of the dataset
+head(iris)
+
+# View the last 6 rows of the dataset
+tail(iris)
+
+# Get a summary of the dataset
+summary(iris)
+
+# Scatter Plot: Sepal.Length vs. Sepal.Width
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  theme_minimal() +
+  ggtitle("Scatter Plot: Sepal Length vs. Sepal Width")
+
+# Add an index column to the dataset for plotting
+iris <- iris %>% mutate(index = row_number())
+
+# Line Plot: Index vs. Sepal.Length
+ggplot(iris, aes(x = index, y = Sepal.Length)) +
+  geom_line() +
+  theme_minimal() +
+  ggtitle("Line Plot: Index vs. Sepal Length")
+
+# Bar Plot: Count of Species
+ggplot(iris, aes(x = factor(Species))) +
+  geom_bar() +
+  theme_minimal() +
+  ggtitle("Bar Plot: Count of Species") +
+  xlab("Species") +
+  ylab("Count")
+
+# Histogram: Distribution of Sepal.Length
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  theme_minimal() +
+  ggtitle("Histogram: Distribution of Sepal Length")
+
+# Box Plot: Sepal.Length by Species
+ggplot(iris, aes(x = factor(Species), y = Sepal.Length)) +
+  geom_boxplot() +
+  theme_minimal() +
+  ggtitle("Box Plot: Sepal Length by Species") +
+  xlab("Species")
+
+# Facet Plot: Sepal.Length vs. Sepal.Width by Species
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  facet_wrap(~Species) +
+  theme_minimal() +
+  ggtitle("Facet Plot: Sepal Length vs. Sepal Width by Species")
+
+# Calculate the correlation matrix (excluding the Species column)
+cor_matrix <- cor(iris[, -which(names(iris) == "Species")])
+
+# Convert the correlation matrix into a data frame
+cor_data <- as.data.frame(as.table(cor_matrix))
+names(cor_data) <- c("Variable1", "Variable2", "Correlation")
+
+# Heatmap: Correlation Matrix of Iris Dataset
+ggplot(cor_data, aes(x = Variable1, y = Variable2, fill = Correlation)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Heatmap: Correlation Matrix of Iris Dataset")
