@@ -1,1 +1,41 @@
+-- Leave Safemode (if HDFS is in safemode)
+hdfs dfsadmin -safemode leave
 
+-- Create Directory
+hdfs dfs -mkdir /path/to/directory
+
+-- Remove Directory (remove empty directory)
+hdfs dfs -rmdir /path/to/directory
+
+-- List Files and Directories
+hdfs dfs -ls /path/to/directory
+
+-- Concatenate and Display File Contents
+hdfs dfs -cat /path/to/file
+
+-- Put File into HDFS (upload from local to HDFS)
+hdfs dfs -put /local/path/to/file /hdfs/path
+
+-- Copy File from Local to HDFS
+hdfs dfs -copyFromLocal /local/path/to/file /hdfs/path
+
+-- Get File from HDFS (download from HDFS to local)
+hdfs dfs -get /hdfs/path/to/file /local/path
+
+-- Copy File from HDFS to Local
+hdfs dfs -copyToLocal /hdfs/path/to/file /local/path
+
+-- Move File or Directory (move within HDFS)
+hdfs dfs -mv /hdfs/source/path /hdfs/destination/path
+
+-- Copy File or Directory (copy within HDFS)
+hdfs dfs -cp /hdfs/source/path /hdfs/destination/path
+
+-- Create an Empty File
+hdfs dfs -touchz /path/to/emptyfile
+
+-- Delete File from HDFS
+hdfs dfs -rm /path/to/file
+
+-- Delete Directory and its Contents (use -r for recursive deletion)
+hdfs dfs -rm -r /path/to/directory
