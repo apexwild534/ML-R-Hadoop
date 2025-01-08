@@ -1,1 +1,70 @@
+-- Create Database
+CREATE DATABASE database_name;
 
+-- Use Database
+USE database_name;
+
+-- Show Databases
+SHOW DATABASES;
+
+-- Drop Database
+DROP DATABASE database_name;
+
+-- Create Table
+CREATE TABLE table_name (column1 type1, column2 type2, ...)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+-- Show Tables
+SHOW TABLES;
+
+-- Describe Table (show schema)
+DESCRIBE table_name;
+
+-- Drop Table
+DROP TABLE table_name;
+
+-- Alter Table (Add Column)
+ALTER TABLE table_name ADD COLUMNS (new_column_name data_type);
+
+-- Alter Table (Rename Table)
+ALTER TABLE old_table_name RENAME TO new_table_name;
+
+-- Load Data into Table
+LOAD DATA INPATH 'hdfs_path' INTO TABLE table_name;
+
+-- Insert Data into Table
+INSERT INTO TABLE table_name VALUES (value1, value2, ...);
+
+-- Select Data from Table
+SELECT * FROM table_name;
+
+-- Filter Data (where clause)
+SELECT * FROM table_name WHERE column1 = value;
+
+-- Join Tables
+SELECT a.column1, b.column2
+FROM table1 a
+JOIN table2 b
+ON a.common_column = b.common_column;
+
+-- Group Data
+SELECT column1, COUNT(*) FROM table_name GROUP BY column1;
+
+-- Order Data
+SELECT * FROM table_name ORDER BY column1 DESC;
+
+-- Limit Results
+SELECT * FROM table_name LIMIT 10;
+
+-- Create Partitioned Table
+CREATE TABLE table_name (column1 type1, column2 type2, ...)
+PARTITIONED BY (partition_column type);
+
+-- Add Partition to Table
+ALTER TABLE table_name ADD PARTITION (partition_column='value');
+
+-- Create Bucketed Table
+CREATE TABLE table_name (column1 type1, column2 type2, ...)
+CLUSTERED BY (column) INTO number_of_buckets BUCKETS;
